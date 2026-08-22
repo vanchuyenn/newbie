@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="NEWBIE - Minecraft Survival Server">
+  <title>NEWBIE | Minecraft Server</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:#f5f7ff;background:#070b16;line-height:1.6;overflow-x:hidden
+    }
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .bg{
+      position:fixed;inset:0;z-index:-2;
+      background:
+        radial-gradient(circle at 15% 20%,rgba(89,92,255,.20),transparent 28%),
+        radial-gradient(circle at 85% 15%,rgba(0,220,180,.13),transparent 25%),
+        radial-gradient(circle at 50% 90%,rgba(255,190,70,.08),transparent 30%),
+        #070b16;
+    }
+    .grid{
+      position:fixed;inset:0;z-index:-1;opacity:.14;
+      background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(to bottom,black,transparent 85%);
+    }
+    header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(16px);
+      background:rgba(7,11,22,.72);
+      border-bottom:1px solid rgba(255,255,255,.08)
+    }
+    .nav{
+      max-width:1120px;margin:auto;padding:15px 20px;
+      display:flex;align-items:center;justify-content:space-between;gap:20px
+    }
+    .logo{font-weight:900;letter-spacing:.08em;font-size:1.1rem}
+    .logo span{color:#7c83ff}
+    nav{display:flex;gap:22px;color:#b9c0d4;font-size:.94rem}
+    nav a:hover{color:#fff}
+    .hero{max-width:1120px;margin:auto;padding:92px 20px 70px;text-align:center}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:7px 13px;
+      border:1px solid rgba(124,131,255,.3);border-radius:999px;
+      background:rgba(124,131,255,.09);color:#cbd0ff;font-size:.85rem
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:#777;box-shadow:0 0 12px #777}
+    .dot.online{background:#45e58a;box-shadow:0 0 14px #45e58a}
+    h1{
+      margin:20px 0 12px;font-size:clamp(3rem,10vw,6.7rem);
+      line-height:.95;letter-spacing:-.055em
+    }
+    .gradient{
+      background:linear-gradient(100deg,#fff 10%,#a9aeff 48%,#65e6c6 90%);
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    .hero p{max-width:680px;margin:0 auto;color:#aeb6ca;font-size:1.08rem}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:28px 0}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 18px;
+      cursor:pointer;transition:.2s;font-weight:750
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .primary{background:#fff;color:#090d18}
+    .secondary{background:rgba(255,255,255,.06);color:#fff}
+    .server-card{
+      max-width:760px;margin:30px auto 0;padding:20px;
+      background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);
+      border-radius:20px;box-shadow:0 20px 80px rgba(0,0,0,.28)
+    }
+    .server-row{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    .server-label{color:#8e98ae;font-size:.78rem;text-transform:uppercase;letter-spacing:.12em}
+    .ip{font-size:1.35rem;font-weight:850;word-break:break-all}
+    .status{display:flex;align-items:center;gap:8px;color:#aeb6ca;font-size:.92rem}
+    .copy{padding:9px 13px;border-radius:10px;background:#171d31;color:#fff;border:1px solid rgba(255,255,255,.1);cursor:pointer}
+    section{max-width:1120px;margin:auto;padding:65px 20px}
+    .section-head{text-align:center;margin-bottom:28px}
+    .section-head h2{font-size:2rem}
+    .section-head p{color:#8f98ad;margin-top:5px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{
+      padding:24px;border-radius:18px;background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .icon{font-size:1.8rem;margin-bottom:12px}
+    .card h3{margin-bottom:6px}.card p{color:#9ca6bb}
+    .discord{
+      display:flex;align-items:center;justify-content:space-between;gap:25px;
+      padding:28px;border-radius:20px;background:linear-gradient(135deg,rgba(88,101,242,.2),rgba(255,255,255,.04));
+      border:1px solid rgba(120,130,255,.2)
+    }
+    .discord p{color:#aab2c5;margin-top:5px}
+    .ranks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .rank{
+      min-height:190px;display:flex;flex-direction:column;justify-content:space-between;
+      padding:22px;border-radius:18px;border:1px dashed rgba(255,255,255,.15);
+      background:rgba(255,255,255,.025)
+    }
+    .rank .price{font-size:1.25rem;color:#8e98ae}
+    .rank button{margin-top:18px;width:100%;border:0;padding:11px;border-radius:10px;background:#151b2c;color:#778197;cursor:not-allowed}
+    .notice{
+      margin-top:14px;padding:13px 15px;border-radius:12px;
+      background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.15);color:#c8c0a5;font-size:.9rem
+    }
+    footer{padding:35px 20px;text-align:center;color:#727c92;border-top:1px solid rgba(255,255,255,.07)}
+    .toast{
+      position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);
+      opacity:0;pointer-events:none;background:#fff;color:#0b1020;padding:10px 15px;
+      border-radius:10px;font-weight:750;transition:.25s;z-index:50
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){
+      nav{display:none}.hero{padding-top:65px}
+      .cards,.ranks{grid-template-columns:1fr}
+      .discord{flex-direction:column;align-items:flex-start}
+      .server-row{align-items:flex-start;flex-direction:column}
+      h1{font-size:clamp(3rem,18vw,5rem)}
+    }
+  </style>
+</head>
+<body>
+<div class="bg"></div><div class="grid"></div>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#">NEWBIE</a>
+    <nav>
+      <a href="#server">Server</a>
+      <a href="#discord">Discord</a>
+      <a href="#ranks">Shop Rank</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="server">
+    <div class="badge"><span id="heroDot" class="dot"></span><span id="heroStatus">Đang kiểm tra server...</span></div>
+    <h1><span class="gradient">NEWBIE</span></h1>
+    <p>Một server Minecraft Survival thân thiện, chill cùng bạn bè và xây dựng hành trình của riêng bạn.</p>
+
+    <div class="actions">
+      <button class="btn primary" onclick="copyIP()">🎮 Copy IP Server</button>
+      <a class="btn secondary" href="https://discord.gg/qPt5bVySJ" target="_blank" rel="noopener">💬 Tham gia Discord</a>
+    </div>
+
+    <div class="server-card">
+      <div class="server-row">
+        <div>
+          <div class="server-label">Minecraft Server IP</div>
+          <div class="ip">newbie.asia:25199</div>
+        </div>
+        <button class="copy" onclick="copyIP()">Copy IP</button>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,.07);margin:17px 0"></div>
+      <div class="server-row">
+        <div class="status"><span id="statusDot" class="dot"></span><span id="statusText">Đang kiểm tra...</span></div>
+        <div class="status">👥 <span id="players">--</span> người chơi</div>
+        <div class="status">🕒 <span id="latency">--</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>🌟 NEWBIE</h2>
+      <p>Chill • Survival • Cộng đồng</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="icon">🌳</div><h3>Survival</h3><p>Trải nghiệm sinh tồn và xây dựng thế giới của riêng bạn.</p></div>
+      <div class="card"><div class="icon">🤝</div><h3>Cộng đồng</h3><p>Chơi cùng bạn bè, lập team và tham gia các hoạt động của server.</p></div>
+      <div class="card"><div class="icon">✨</div><h3>Chill</h3><p>Một không gian chơi Minecraft nhẹ nhàng và vui vẻ.</p></div>
+    </div>
+  </section>
+
+  <section id="discord">
+    <div class="discord">
+      <div>
+        <h2>💬 Discord Community</h2>
+        <p>Tham gia Discord để nhận thông báo, trò chuyện và cập nhật server.</p>
+      </div>
+      <a class="btn primary" href="https://discord.gg/qPt5bVySJ" target="_blank" rel="noopener">Tham gia Discord →</a>
+    </div>
+  </section>
+
+  <section id="ranks">
+    <div class="section-head">
+      <h2>👑 Shop Rank</h2>
+      <p>Khu vực rank sẽ được cập nhật sau.</p>
+    </div>
+    <div class="ranks">
+      <div class="rank"><div><h3>Rank #1</h3><p class="price">Sắp cập nhật</p></div><button disabled>Chưa mở bán</button></div>
+      <div class="rank"><div><h3>Rank #2</h3><p class="price">Sắp cập nhật</p></div><button disabled>Chưa mở bán</button></div>
+      <div class="rank"><div><h3>Rank #3</h3><p class="price">Sắp cập nhật</p></div><button disabled>Chưa mở bán</button></div>
+    </div>
+    <div class="notice">💡 Khi bạn có tên rank và giá, chỉ cần sửa các thẻ rank trong file này.</div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> NEWBIE • Minecraft Survival Server
+</footer>
+
+<div id="toast" class="toast">Đã copy IP!</div>
+
+<script>
+  const SERVER_IP = "newbie.asia:25199";
+  const STATUS_API = "https://api.mcsrvstat.us/3/" + encodeURIComponent(SERVER_IP);
+
+  async function checkServer(){
+    const dot = document.getElementById("statusDot");
+    const heroDot = document.getElementById("heroDot");
+    const text = document.getElementById("statusText");
+    const heroStatus = document.getElementById("heroStatus");
+    const players = document.getElementById("players");
+    const latency = document.getElementById("latency");
+
+    try{
+      const start = performance.now();
+      const response = await fetch(STATUS_API, {cache:"no-store"});
+      const data = await response.json();
+      const ms = Math.round(performance.now() - start);
+
+      if(data.online){
+        dot.classList.add("online"); heroDot.classList.add("online");
+        text.textContent = "Server đang Online";
+        heroStatus.textContent = "Server đang Online";
+        players.textContent = `${data.players?.online ?? 0}/${data.players?.max ?? "?"}`;
+        latency.textContent = ms + " ms";
+      }else{
+        text.textContent = "Server đang Offline";
+        heroStatus.textContent = "Server đang Offline";
+        players.textContent = "0";
+        latency.textContent = "--";
+      }
+    }catch(e){
+      text.textContent = "Không thể kiểm tra";
+      heroStatus.textContent = "Không thể kiểm tra server";
+      players.textContent = "--";
+      latency.textContent = "--";
+    }
+  }
+
+  async function copyIP(){
+    try{
+      await navigator.clipboard.writeText(SERVER_IP);
+    }catch(e){
+      const t=document.createElement("textarea");
+      t.value=SERVER_IP; document.body.appendChild(t); t.select();
+      document.execCommand("copy"); t.remove();
+    }
+    const toast=document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),1600);
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+  checkServer();
+  setInterval(checkServer, 30000);
+</script>
+</body>
+</html>
